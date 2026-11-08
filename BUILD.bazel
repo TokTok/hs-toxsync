@@ -1,0 +1,45 @@
+load("@rules_haskell//haskell:defs.bzl", "haskell_library")
+load("//third_party/haskell/hspec-discover:build_defs.bzl", "hspec_test")
+load("//tools/project:build_defs.bzl", "project")
+
+project(license = "gpl3-https")
+
+haskell_library(
+    name = "hs-toxsync",
+    srcs = glob(["src/**/*.hs"]),
+    ghcopts = ["-j4"],
+    src_strip_prefix = "src",
+    tags = [
+        "haskell",
+        "no-cross",
+    ],
+    version = "0.0.1",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//third_party/haskell:base",
+        "//third_party/haskell:base16-bytestring",
+        "//third_party/haskell:bytestring",
+        "//third_party/haskell:containers",
+        "//third_party/haskell:cryptohash-sha256",
+        "//third_party/haskell:text",
+    ],
+)
+
+hspec_test(
+    name = "testsuite",
+    size = "small",
+    data = glob(["test/conformance/*.json"]),
+    deps = [
+        ":hs-toxsync",
+        "//third_party/haskell:aeson",
+        "//third_party/haskell:base",
+        "//third_party/haskell:base16-bytestring",
+        "//third_party/haskell:bytestring",
+        "//third_party/haskell:containers",
+        "//third_party/haskell:directory",
+        "//third_party/haskell:hspec",
+        "//third_party/haskell:scientific",
+        "//third_party/haskell:text",
+        "//third_party/haskell:vector",
+    ],
+)

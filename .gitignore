@@ -1,0 +1,11 @@
+# Build products.
+/dist
+/dist-newstyle
+/*.tix
+
+/.stack-work
+/stack.yaml.lock
+
+# Temporary files.
+*~
+*.swp
